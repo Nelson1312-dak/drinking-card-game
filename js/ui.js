@@ -6,6 +6,7 @@
 const UI = {
   // ======== DOM Cache ========
   elements: {},
+  _editingPlayerId: null,
 
   init() {
     // Cache all important elements
@@ -417,6 +418,20 @@ const UI = {
     setTimeout(() => {
       this.elements.cardContainer.classList.remove('shake');
     }, 500);
+  },
+
+  // ======== Edit Name Popup ========
+  showEditPopup(playerId, currentName) {
+    this._editingPlayerId = playerId;
+    const input = document.getElementById('popup-name-input');
+    input.value = currentName;
+    document.getElementById('popup-edit-player').classList.remove('hidden');
+    setTimeout(() => { input.focus(); input.select(); }, 50);
+  },
+
+  hideEditPopup() {
+    document.getElementById('popup-edit-player').classList.add('hidden');
+    this._editingPlayerId = null;
   },
 
   // ======== Utility ========

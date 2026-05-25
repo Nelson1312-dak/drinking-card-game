@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup screen state
   let selectedIntensity = 'mild';
 
-  // Initialize default players (Hội nhóm mode starts with 5 auto-generated players)
-  game.addPlayer('Người 1');
-  game.addPlayer('Người 2');
-  game.addPlayer('Người 3');
-  game.addPlayer('Người 4');
-  game.addPlayer('Người 5');
+  // Animal name pool for quick fill
+  const ANIMAL_NAME_POOL = [
+    'Chó Béo', 'Mèo Lười', 'Chim Sẻ', 'Bướm Hoa', 'Gà Trống',
+    'Cáo Đỏ', 'Thỏ Nhỏ', 'Gấu Mập', 'Cá Vàng', 'Hổ Con',
+    'Khỉ Ranh', 'Lợn Hồng', 'Vịt Con', 'Rùa Chậm', 'Ếch Xanh'
+  ];
 
   // Common setup elements
   const modeTabBtns = document.querySelectorAll('.mode-tab-btn');
@@ -33,34 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const mode = btn.dataset.mode;
       hapticFeedback('light');
 
-      // Reset players and pre-populate defaults for the chosen mode
-      game.resetGame();
+      // Start with a clean slate
       game.players = [];
-      UI.renderPlayerList([]);
+      UI.elements.playerNameInput.value = '';
 
       if (mode === 'solo') {
         setupPlayerSection.style.display = 'none';
-        game.addPlayer('Cả Nhóm');
-      } else if (mode === 'duo') {
-        setupPlayerSection.style.display = 'block';
-        game.addPlayer('Người 1');
-        game.addPlayer('Người 2');
-        UI.elements.playerNameInput.value = '';
+        game.players = [new Player('Cả Nhóm', 0)];
       } else {
-        // party
         setupPlayerSection.style.display = 'block';
-        game.addPlayer('Người 1');
-        game.addPlayer('Người 2');
-        game.addPlayer('Người 3');
-        game.addPlayer('Người 4');
-        game.addPlayer('Người 5');
-        UI.elements.playerNameInput.value = '';
       }
+      UI.renderPlayerList(game.players);
 
       // Sync the mode tab inside the setup screen
       modeTabBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 
-      // Go to setup so user can edit names, packs, and intensity before starting
       UI.showScreen('screen-setup');
       if (mode !== 'solo') {
         UI.elements.playerNameInput.focus();
@@ -93,32 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       const mode = btn.dataset.mode;
       hapticFeedback('light');
-      
-      // Reset current game engine players
-      game.resetGame();
+
       game.players = [];
-      UI.renderPlayerList([]);
-      
+      UI.elements.playerNameInput.value = '';
+
       if (mode === 'solo') {
         setupPlayerSection.style.display = 'none';
-        game.addPlayer('Cả Nhóm');
-      } else if (mode === 'duo') {
-        setupPlayerSection.style.display = 'block';
-        game.addPlayer('Người 1');
-        game.addPlayer('Người 2');
-        // Clear input to allow focus later
-        UI.elements.playerNameInput.value = '';
+        game.players = [new Player('Cả Nhóm', 0)];
       } else {
-        // party (standard: Hội nhóm)
         setupPlayerSection.style.display = 'block';
-        game.addPlayer('Người 1');
-        game.addPlayer('Người 2');
-        game.addPlayer('Người 3');
-        game.addPlayer('Người 4');
-        game.addPlayer('Người 5');
-        UI.elements.playerNameInput.value = '';
         UI.elements.playerNameInput.focus();
       }
+      UI.renderPlayerList(game.players);
     });
   });
 
@@ -127,20 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
     addPlayerFromInput();
   });
 
-  // Handle quick fill 5 players
+  // Handle quick fill 5 random animal players
   UI.elements.btnQuickFill.addEventListener('click', () => {
     hapticFeedback('success');
-    game.resetGame();
-    game.players = [];
-    UI.renderPlayerList([]);
-    
-    game.addPlayer('Người 1');
-    game.addPlayer('Người 2');
-    game.addPlayer('Người 3');
-    game.addPlayer('Người 4');
-    game.addPlayer('Người 5');
-    
-    UI.showToast('Đã tạo nhanh 5 người chơi!', 'success');
+    const picked = [...ANIMAL_NAME_POOL].sort(() => Math.random() - 0.5).slice(0, 5);
+    game.players = picked.map((name, i) => new Player(name, i));
+    UI.renderPlayerList(game.players);
+    UI.showToast('Đã tạo 5 người chơi ngẫu nhiên! 🐾', 'success');
   });
 
   // Handle adding player via Enter key in input
@@ -165,60 +131,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle removing or editing a player
   UI.elements.playerList.addEventListener('click', (e) => {
-    const playerId = e.target.dataset.id || e.target.closest('.btn-edit-player')?.dataset.id || e.target.closest('.btn-remove-player')?.dataset.id;
-    if (!playerId) return;
+    const removeBtn = e.target.closest('.btn-remove-player');
+    const editBtn = e.target.closest('.btn-edit-player');
 
-    if (e.target.classList.contains('btn-remove-player')) {
-      game.removePlayer(playerId);
+    if (removeBtn) {
+      game.removePlayer(removeBtn.dataset.id);
       hapticFeedback('light');
-    } else if (e.target.classList.contains('btn-edit-player') || e.target.closest('.btn-edit-player')) {
-      const targetBtn = e.target.classList.contains('btn-edit-player') ? e.target : e.target.closest('.btn-edit-player');
-      const item = targetBtn.closest('.player-item');
-      const textSpan = item.querySelector('.player-name-text');
-      
-      // If already in edit mode, ignore
-      if (textSpan.querySelector('.player-edit-input')) return;
-      
-      const oldName = textSpan.textContent.trim();
-      textSpan.innerHTML = `<input type="text" class="player-edit-input" value="${oldName}" maxlength="15" autocomplete="off">`;
-      const input = textSpan.querySelector('.player-edit-input');
-      
+    } else if (editBtn) {
+      const item = editBtn.closest('.player-item');
+      const oldName = item.querySelector('.player-name-text').textContent.trim();
       hapticFeedback('light');
-      input.focus();
-      input.select();
-      
-      // Prevent clicking the input from triggering parent item click handlers
-      input.addEventListener('click', (ev) => ev.stopPropagation());
-      
-      let isSaved = false;
-      const saveEdit = () => {
-        if (isSaved) return;
-        isSaved = true;
-        
-        const newName = input.value.trim();
-        if (newName === oldName || !newName) {
-          UI.renderPlayerList(game.players);
-          return;
-        }
-        
-        const res = game.updatePlayerName(playerId, newName);
-        if (!res.success) {
-          hapticFeedback('error');
-          UI.showToast(res.error, 'error');
-          UI.renderPlayerList(game.players);
-        }
-      };
-      
-      input.addEventListener('keypress', (ev) => {
-        if (ev.key === 'Enter') {
-          saveEdit();
-        }
-      });
-      
-      input.addEventListener('blur', () => {
-        saveEdit();
-      });
+      UI.showEditPopup(editBtn.dataset.id, oldName);
     }
+  });
+
+  // Edit popup handlers
+  function saveEditPopup() {
+    const newName = document.getElementById('popup-name-input').value;
+    const res = game.updatePlayerName(UI._editingPlayerId, newName);
+    if (!res.success) {
+      hapticFeedback('error');
+      UI.showToast(res.error, 'error');
+    } else {
+      hapticFeedback('light');
+      UI.hideEditPopup();
+    }
+  }
+
+  document.getElementById('popup-save').addEventListener('click', saveEditPopup);
+  document.getElementById('popup-cancel').addEventListener('click', () => {
+    hapticFeedback('light');
+    UI.hideEditPopup();
+  });
+  document.getElementById('popup-name-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') saveEditPopup();
+  });
+  document.getElementById('popup-edit-player').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) UI.hideEditPopup();
   });
 
   // Handle intensity selection
