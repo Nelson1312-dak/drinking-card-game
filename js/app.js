@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
   splashModeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
-      hapticFeedback('success');
-      
-      // Setup players for this mode
+      hapticFeedback('light');
+
+      // Reset players and pre-populate defaults for the chosen mode
       game.resetGame();
       game.players = [];
       UI.renderPlayerList([]);
-      
+
       if (mode === 'solo') {
         setupPlayerSection.style.display = 'none';
         game.addPlayer('Cả Nhóm');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game.addPlayer('Người 2');
         UI.elements.playerNameInput.value = '';
       } else {
-        // party (standard: Hội nhóm)
+        // party
         setupPlayerSection.style.display = 'block';
         game.addPlayer('Người 1');
         game.addPlayer('Người 2');
@@ -57,22 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
         UI.elements.playerNameInput.value = '';
       }
 
-      // Update the active tab in Setup screen to match
-      modeTabBtns.forEach(b => {
-        if (b.dataset.mode === mode) {
-          b.classList.add('active');
-        } else {
-          b.classList.remove('active');
-        }
-      });
-      
-      // Gather active packs from checkboxes
-      const checkedPacks = Array.from(document.querySelectorAll('.pack-checkbox:checked'))
-        .map(cb => cb.value);
-      const finalPacks = checkedPacks.length > 0 ? checkedPacks : ['truth', 'dare', 'group', 'never_have_i_ever', 'vote'];
-      
-      // Start the game immediately!
-      game.startGame(selectedIntensity, finalPacks);
+      // Sync the mode tab inside the setup screen
+      modeTabBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+
+      // Go to setup so user can edit names, packs, and intensity before starting
+      UI.showScreen('screen-setup');
+      if (mode !== 'solo') {
+        UI.elements.playerNameInput.focus();
+      }
     });
   });
 
