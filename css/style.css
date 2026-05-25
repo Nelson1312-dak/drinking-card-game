@@ -431,9 +431,17 @@ body {
   font-weight: 700;
 }
 
+#setup-player-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .player-list {
   flex: 1;
   overflow-y: auto;
+  min-height: 0;
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
