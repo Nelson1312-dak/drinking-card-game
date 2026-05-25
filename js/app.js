@@ -338,9 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Delay showing the response actions slightly to let the card flip complete
       setTimeout(() => {
-        if (card.type === 'never_have_i_ever') {
+        if (card.type === 'never_have_i_ever' && game.players.length > 1) {
           UI.renderNhieModal(card, game.players);
-        } else if (card.type === 'vote') {
+        } else if (card.type === 'vote' && game.players.length > 1) {
           UI.renderVoteModal(card, game.players);
         } else {
           UI.showPostFlipActions(card.type);
