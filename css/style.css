@@ -658,22 +658,22 @@ body {
 
 /* Card pack selector checklist */
 .pack-selector {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .selector-title {
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-weight: 700;
 }
 
 .pack-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 7px;
 }
 
 .pack-checkbox-label {
@@ -693,17 +693,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 8px;
-  border-radius: 14px;
-  font-size: 13px;
+  gap: 6px;
+  padding: 9px 6px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.02);
   border: 1.5px solid var(--glass-border);
   color: var(--text-secondary);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Hover/Active states */
@@ -760,7 +760,7 @@ body {
 }
 
 .intensity-selector {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 #btn-play {
@@ -774,11 +774,12 @@ body {
 }
 
 .intensity-title {
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  font-weight: 700;
 }
 
 .intensity-options {
@@ -791,11 +792,11 @@ body {
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  padding: 12px 8px;
+  padding: 9px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -1356,9 +1357,9 @@ body {
 /* ========== TOAST & SHAKE EFFECTS ========== */
 .toast {
   position: absolute;
-  bottom: 30px;
+  top: 16px;
   left: 50%;
-  transform: translate(-50%, 20px);
+  transform: translate(-50%, -12px);
   background: rgba(0, 0, 0, 0.85);
   border: 1px solid var(--glass-border);
   padding: 10px 20px;
@@ -1371,6 +1372,8 @@ body {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 1000;
   white-space: nowrap;
+  max-width: 90%;
+  text-align: center;
 }
 
 .toast.show {
