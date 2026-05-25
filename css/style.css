@@ -134,11 +134,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  height: 90%;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.splash-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .splash-emoji {
   font-size: 72px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -156,17 +167,103 @@ body {
 }
 
 .game-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 48px;
+}
+
+/* Floating Card Stack Preview */
+.splash-card-preview {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  margin: 15px 0;
+}
+
+.mini-card {
+  position: absolute;
+  width: 110px;
+  height: 160px;
+  border-radius: 16px;
+  border: 2px solid var(--glass-border-rich);
+  background: rgba(22, 17, 39, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.mc-truth {
+  border-color: var(--truth-color);
+  box-shadow: var(--glow-blue), 0 10px 20px rgba(0,0,0,0.6);
+  animation: float-left 4s ease-in-out infinite;
+}
+
+.mc-dare {
+  border-color: var(--dare-color);
+  box-shadow: var(--glow-red), 0 10px 20px rgba(0,0,0,0.6);
+  animation: float-right 4.5s ease-in-out infinite;
+}
+
+.mc-never {
+  z-index: 2;
+  border-color: var(--never-color);
+  box-shadow: var(--glow-pink), 0 15px 30px rgba(0,0,0,0.7);
+  animation: float-center 3.5s ease-in-out infinite;
+}
+
+/* Keyframes for Floating Stack */
+@keyframes float-left {
+  0%, 100% { transform: rotate(-14deg) translateX(-70px) translateY(12px); }
+  50% { transform: rotate(-12deg) translateX(-70px) translateY(-2px); }
+}
+
+@keyframes float-right {
+  0%, 100% { transform: rotate(14deg) translateX(70px) translateY(12px); }
+  50% { transform: rotate(12deg) translateX(70px) translateY(-2px); }
+}
+
+@keyframes float-center {
+  0%, 100% { transform: translateY(-10px); }
+  50% { transform: translateY(-24px); }
+}
+
+.splash-action {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-neon-start {
+  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 4px 15px rgba(124, 58, 237, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-neon-start:hover {
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.7), 0 6px 20px rgba(124, 58, 237, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-neon-start:active {
+  transform: scale(0.96) translateY(0);
 }
 
 .splash-footer {
-  margin-top: 32px;
-  font-size: 14px;
+  margin-top: 20px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 1px;
 }
