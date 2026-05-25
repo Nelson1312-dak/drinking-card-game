@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   game.addPlayer('Người 4');
   game.addPlayer('Người 5');
 
+  // Common setup elements
+  const modeTabBtns = document.querySelectorAll('.mode-tab-btn');
+  const setupPlayerSection = document.getElementById('setup-player-section');
+
   // ==========================================
   // 1. EVENT BINDING: SPLASH SCREEN
   // ==========================================
@@ -28,15 +32,59 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
       hapticFeedback('success');
-      UI.showScreen('screen-setup');
       
-      // Trigger setup tab change programmatically
-      const targetTab = document.querySelector(`.mode-tab-btn[data-mode="${mode}"]`);
-      if (targetTab) {
-        targetTab.click();
+      // Setup players for this mode
+      game.resetGame();
+      game.players = [];
+      UI.renderPlayerList([]);
+      
+      if (mode === 'solo') {
+        setupPlayerSection.style.display = 'none';
+        game.addPlayer('Cả Nhóm');
+      } else if (mode === 'duo') {
+        setupPlayerSection.style.display = 'block';
+        game.addPlayer('Người 1');
+        game.addPlayer('Người 2');
+        UI.elements.playerNameInput.value = '';
+      } else {
+        // party (standard: Hội nhóm)
+        setupPlayerSection.style.display = 'block';
+        game.addPlayer('Người 1');
+        game.addPlayer('Người 2');
+        game.addPlayer('Người 3');
+        game.addPlayer('Người 4');
+        game.addPlayer('Người 5');
+        UI.elements.playerNameInput.value = '';
       }
+
+      // Update the active tab in Setup screen to match
+      modeTabBtns.forEach(b => {
+        if (b.dataset.mode === mode) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+      
+      // Gather active packs from checkboxes
+      const checkedPacks = Array.from(document.querySelectorAll('.pack-checkbox:checked'))
+        .map(cb => cb.value);
+      const finalPacks = checkedPacks.length > 0 ? checkedPacks : ['truth', 'dare', 'group', 'never_have_i_ever', 'vote'];
+      
+      // Start the game immediately!
+      game.startGame(selectedIntensity, finalPacks);
     });
   });
+
+  // Bind settings/setup button on splash screen
+  const btnGoSetup = document.getElementById('btn-go-setup');
+  if (btnGoSetup) {
+    btnGoSetup.addEventListener('click', () => {
+      hapticFeedback('light');
+      UI.showScreen('screen-setup');
+      UI.elements.playerNameInput.focus();
+    });
+  }
 
   // ==========================================
   // 2. EVENT BINDING: SETUP SCREEN
@@ -46,10 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     UI.showScreen('screen-splash');
   });
 
-  // Game Mode Selection Tab Logic
-  const modeTabBtns = document.querySelectorAll('.mode-tab-btn');
-  const setupPlayerSection = document.getElementById('setup-player-section');
-
+  // Game Mode Selection Tab Logic inside Setup screen
   modeTabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       modeTabBtns.forEach(b => b.classList.remove('active'));
