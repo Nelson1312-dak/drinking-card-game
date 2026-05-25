@@ -250,6 +250,32 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 8px;
+}
+
+.splash-action-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.splash-mode-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.splash-mode-btn {
+  padding: 14px 20px !important;
+  font-size: 15px !important;
+  width: 100% !important;
+  border-radius: var(--radius) !important;
+  justify-content: center !important;
 }
 
 .btn-neon-start {
@@ -260,11 +286,11 @@ body {
 
 .btn-neon-start:hover {
   box-shadow: 0 0 30px rgba(124, 58, 237, 0.7), 0 6px 20px rgba(124, 58, 237, 0.5);
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
 }
 
 .btn-neon-start:active {
-  transform: scale(0.96) translateY(0);
+  transform: scale(0.96) translateY(0) !important;
 }
 
 .splash-footer {
@@ -445,7 +471,7 @@ body {
 }
 
 .player-list {
-  max-height: 180px;
+  max-height: 130px;
   overflow-y: auto;
   margin-bottom: 12px;
   display: flex;
@@ -743,6 +769,10 @@ body {
 
 .intensity-selector {
   margin-bottom: 16px;
+}
+
+#btn-play {
+  margin-bottom: 30px; /* Thêm khoảng trống ở chân màn hình để không bị cấn */
 }
 
 .intensity-title {

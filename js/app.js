@@ -23,10 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 1. EVENT BINDING: SPLASH SCREEN
   // ==========================================
-  UI.elements.btnStart.addEventListener('click', () => {
-    hapticFeedback('light');
-    UI.showScreen('screen-setup');
-    UI.elements.playerNameInput.focus();
+  const splashModeBtns = document.querySelectorAll('.splash-mode-btn');
+  splashModeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      hapticFeedback('success');
+      UI.showScreen('screen-setup');
+      
+      // Trigger setup tab change programmatically
+      const targetTab = document.querySelector(`.mode-tab-btn[data-mode="${mode}"]`);
+      if (targetTab) {
+        targetTab.click();
+      }
+    });
   });
 
   // ==========================================
