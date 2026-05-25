@@ -822,8 +822,15 @@ body {
 
 .intensity-label {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-secondary);
+}
+
+.intensity-desc {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
 /* Active intensity states */

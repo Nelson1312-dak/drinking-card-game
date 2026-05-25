@@ -144,6 +144,51 @@ const ALL_CARDS = [
   { id: 78, type: 'vote', content: 'Ai sẽ là người kết hôn cuối cùng trong nhóm?',                             penalty: 3, intensity: 'spicy',  emoji: '🗳️', targetCount: 1 },
   { id: 79, type: 'vote', content: 'Ai trong nhóm mà bạn muốn "ship" với nhau nhất?',                          penalty: 3, intensity: 'spicy',  emoji: '🗳️', targetCount: 1 },
   { id: 80, type: 'vote', content: 'Ai là người dễ "fall in love" nhất nhóm?',                                  penalty: 3, intensity: 'spicy',  emoji: '🗳️', targetCount: 1 },
+
+  // =============================================
+  //  HOANG DẠI PACK — extra spicy cards
+  // =============================================
+
+  // — Sự Thật (Truth) hoang dại — 8 cards —
+  { id: 81,  type: 'truth', content: 'Bạn có đang thích ai trong nhóm này không? Không được nói dối!',             penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 82,  type: 'truth', content: 'Kể lần gần nhất bạn làm điều gì liều lĩnh vì một người?',                    penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 83,  type: 'truth', content: 'Lần cuối bạn flirt với ai là khi nào và kết quả thế nào?',                   penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 84,  type: 'truth', content: 'Nếu phải ngủ cùng 1 người trong nhóm tối nay — bạn chọn ai?',                penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 85,  type: 'truth', content: 'Bạn đã từng ghen với ai trong nhóm này vì lý do tình cảm chưa?',             penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 86,  type: 'truth', content: 'App hẹn hò nào bạn đã dùng và câu chuyện buồn cười nhất bạn gặp?',           penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 87,  type: 'truth', content: 'Ai trong nhóm mà bạn nghĩ hấp dẫn nhất về mặt ngoại hình? Nói thật!',        penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+  { id: 88,  type: 'truth', content: 'Điều gì bạn từng làm mà nếu bố mẹ biết thì xỉu tại chỗ?',                   penalty: 3, intensity: 'spicy', emoji: '🤔', targetCount: 1 },
+
+  // — Thử Thách (Dare) hoang dại — 8 cards —
+  { id: 89,  type: 'dare', content: 'Để người bên phải đặt tên liên lạc của bạn thành gì tùy họ — giữ cả tối!',    penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 90,  type: 'dare', content: 'Để cả nhóm soạn và gửi 1 tin nhắn bất kỳ từ điện thoại của bạn!',             penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 91,  type: 'dare', content: 'Đưa điện thoại cho người bên trái — họ được đọc 5 tin nhắn gần nhất của bạn!', penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 92,  type: 'dare', content: 'Nhắn tin cho người yêu cũ: "Em/Anh vẫn nhớ đến bạn" rồi đọc to phản hồi!',   penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 93,  type: 'dare', content: 'Chụp ảnh mặt mộc rồi đặt làm ảnh đại diện trong 1 tiếng!',                    penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 94,  type: 'dare', content: 'Gọi điện bố hoặc mẹ ngay bây giờ và nói "Bố/Mẹ ơi, con yêu bố/mẹ lắm!"',    penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 95,  type: 'dare', content: 'Nói thật 1 điều bạn chưa bao giờ dám nói với người ngồi bên trái trong nhóm!', penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+  { id: 96,  type: 'dare', content: 'Khóa điện thoại và đặt lên bàn cho người bên phải giữ trong 3 phút!',          penalty: 3, intensity: 'spicy', emoji: '🔥', targetCount: 1 },
+
+  // — Cả Nhóm (Group) hoang dại — 6 cards —
+  { id: 97,  type: 'group', content: 'Mỗi người tiết lộ notification cuối trên điện thoại to cho cả nhóm nghe — ai xấu hổ nhất uống 2!', penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+  { id: 98,  type: 'group', content: 'Cả nhóm im lặng tuyệt đối — ai nói trước hoặc cười trước uống 2 shots!',      penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+  { id: 99,  type: 'group', content: 'Mỗi người nói thật 1 điều họ thực sự nghĩ về người ngồi bên phải — không được nịnh!', penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+  { id: 100, type: 'group', content: 'Điện thoại sang trái — người nhận được đặt ảnh đại diện tùy thích trong 5 phút!', penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+  { id: 101, type: 'group', content: 'Cả nhóm đếm 1-2-3 và đồng loạt chỉ vào người mà mình nghĩ "nguy hiểm" nhất tối nay!', penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+  { id: 102, type: 'group', content: 'Mỗi người nhắn 1 tin bí ẩn cho người mình thích nhất trong nhóm — không được reveal!', penalty: 3, intensity: 'spicy', emoji: '👥', targetCount: 0 },
+
+  // — Chưa Từng (Never Have I Ever) hoang dại — 5 cards —
+  { id: 103, type: 'never_have_i_ever', content: 'Tôi chưa bao giờ xóa toàn bộ lịch sử chat vì sợ ai đó xem!',    penalty: 3, intensity: 'spicy', emoji: '🙈', targetCount: 0 },
+  { id: 104, type: 'never_have_i_ever', content: 'Tôi chưa bao giờ có crush với người đã có người yêu!',           penalty: 3, intensity: 'spicy', emoji: '🙈', targetCount: 0 },
+  { id: 105, type: 'never_have_i_ever', content: 'Tôi chưa bao giờ hối hận về điều gì đó xảy ra sau một đêm say!', penalty: 3, intensity: 'spicy', emoji: '🙈', targetCount: 0 },
+  { id: 106, type: 'never_have_i_ever', content: 'Tôi chưa bao giờ nói "Tôi yêu bạn" mà không thực sự nghĩ vậy!', penalty: 3, intensity: 'spicy', emoji: '🙈', targetCount: 0 },
+  { id: 107, type: 'never_have_i_ever', content: 'Tôi chưa bao giờ giả vờ không nhận ra ai để tránh nói chuyện!',  penalty: 3, intensity: 'spicy', emoji: '🙈', targetCount: 0 },
+
+  // — Bình Chọn (Vote) hoang dại — 4 cards —
+  { id: 108, type: 'vote', content: 'Ai trong nhóm có khả năng làm mọi người say mê nhất?',                         penalty: 3, intensity: 'spicy', emoji: '🗳️', targetCount: 1 },
+  { id: 109, type: 'vote', content: 'Ai ẩn chứa nhiều bí mật tình cảm nhất trong nhóm?',                           penalty: 3, intensity: 'spicy', emoji: '🗳️', targetCount: 1 },
+  { id: 110, type: 'vote', content: 'Ai sẽ làm điều điên rồ nhất tối nay nếu say đủ?',                             penalty: 3, intensity: 'spicy', emoji: '🗳️', targetCount: 1 },
+  { id: 111, type: 'vote', content: 'Ai trong nhóm mà bạn muốn được hôn nhất nếu tất cả đều FA?',                  penalty: 3, intensity: 'spicy', emoji: '🗳️', targetCount: 1 },
 ];
 
 
