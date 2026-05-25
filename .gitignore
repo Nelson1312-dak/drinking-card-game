@@ -1,0 +1,24 @@
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on NTFS file systems
+$RECYCLE.BIN/
+
+# Mac OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
