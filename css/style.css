@@ -35,12 +35,12 @@
   --vote-color: #ffd700;
   --vote-grad: linear-gradient(135deg, #ffd700, #ffaa00);
   
-  /* Glow Effects */
-  --glow-blue: 0 0 20px rgba(0, 212, 255, 0.5);
-  --glow-red: 0 0 20px rgba(255, 68, 68, 0.5);
-  --glow-green: 0 0 20px rgba(0, 255, 136, 0.5);
-  --glow-pink: 0 0 20px rgba(255, 102, 255, 0.5);
-  --glow-gold: 0 0 20px rgba(255, 215, 0, 0.5);
+  /* Glow Effects — 3-layer neon: tight core + medium spread + outer halo */
+  --glow-blue:  0 0 6px #00d4ff, 0 0 20px rgba(0, 212, 255, 0.55),  0 0 45px rgba(0, 212, 255, 0.18);
+  --glow-red:   0 0 6px #ff4444, 0 0 20px rgba(255, 68, 68, 0.55),   0 0 45px rgba(255, 68, 68, 0.18);
+  --glow-green: 0 0 6px #00ff88, 0 0 20px rgba(0, 255, 136, 0.55),  0 0 45px rgba(0, 255, 136, 0.18);
+  --glow-pink:  0 0 6px #ff66ff, 0 0 20px rgba(255, 102, 255, 0.55), 0 0 45px rgba(255, 102, 255, 0.18);
+  --glow-gold:  0 0 6px #ffd700, 0 0 20px rgba(255, 215, 0, 0.55),  0 0 45px rgba(255, 215, 0, 0.18);
   
   /* Layout */
   --radius: 16px;
@@ -166,10 +166,11 @@ body {
   text-transform: uppercase;
   background: linear-gradient(to right, #ffd700, #ff8800, #ff3366);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
   letter-spacing: -1px;
-  text-shadow: 0 0 30px rgba(255, 136, 0, 0.2);
+  filter: drop-shadow(0 0 12px rgba(255, 136, 0, 0.55));
 }
 
 .game-subtitle {
@@ -212,12 +213,16 @@ body {
 
 .mc-truth {
   border-color: var(--truth-color);
+  color: var(--truth-color);
+  text-shadow: 0 0 8px var(--truth-color);
   box-shadow: var(--glow-blue), 0 10px 20px rgba(0,0,0,0.6);
   animation: float-left 4s ease-in-out infinite;
 }
 
 .mc-dare {
   border-color: var(--dare-color);
+  color: var(--dare-color);
+  text-shadow: 0 0 8px var(--dare-color);
   box-shadow: var(--glow-red), 0 10px 20px rgba(0,0,0,0.6);
   animation: float-right 4.5s ease-in-out infinite;
 }
@@ -225,6 +230,8 @@ body {
 .mc-never {
   z-index: 2;
   border-color: var(--never-color);
+  color: var(--never-color);
+  text-shadow: 0 0 8px var(--never-color);
   box-shadow: var(--glow-pink), 0 15px 30px rgba(0,0,0,0.7);
   animation: float-center 3.5s ease-in-out infinite;
 }

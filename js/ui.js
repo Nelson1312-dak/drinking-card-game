@@ -398,7 +398,7 @@ const UI = {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
-    document.body.appendChild(toast);
+    (this.elements.app || document.body).appendChild(toast);
 
     // Trigger animation
     requestAnimationFrame(() => {
