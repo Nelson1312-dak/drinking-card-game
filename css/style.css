@@ -396,18 +396,56 @@ body {
   text-overflow: ellipsis;
 }
 
-.btn-remove-player {
+.player-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-remove-player, .btn-edit-player {
   background: transparent;
   border: none;
   color: var(--text-muted);
   font-size: 16px;
   cursor: pointer;
   padding: 4px;
-  transition: color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
 }
 
 .btn-remove-player:hover {
   color: #ef4444;
+  transform: scale(1.1);
+}
+
+.btn-edit-player {
+  font-size: 14px;
+}
+
+.btn-edit-player:hover {
+  color: var(--truth-color);
+  transform: scale(1.1);
+}
+
+.player-edit-input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.player-edit-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* Mode selector tabs */

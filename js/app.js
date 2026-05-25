@@ -117,12 +117,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle removing a player
+  // Handle removing or editing a player
   UI.elements.playerList.addEventListener('click', (e) => {
+    const playerId = e.target.dataset.id || e.target.closest('.btn-edit-player')?.dataset.id || e.target.closest('.btn-remove-player')?.dataset.id;
+    if (!playerId) return;
+
     if (e.target.classList.contains('btn-remove-player')) {
-      const playerId = e.target.dataset.id;
       game.removePlayer(playerId);
       hapticFeedback('light');
+    } else if (e.target.classList.contains('btn-edit-player') || e.target.closest('.btn-edit-player')) {
+      const targetBtn = e.target.classList.contains('btn-edit-player') ? e.target : e.target.closest('.btn-edit-player');
+      const item = targetBtn.closest('.player-item');
+      const textSpan = item.querySelector('.player-name-text');
+      
+      // If already in edit mode, ignore
+      if (textSpan.querySelector('.player-edit-input')) return;
+      
+      const oldName = textSpan.textContent.trim();
+      textSpan.innerHTML = `<input type="text" class="player-edit-input" value="${oldName}" maxlength="15" autocomplete="off">`;
+      const input = textSpan.querySelector('.player-edit-input');
+      
+      hapticFeedback('light');
+      input.focus();
+      input.select();
+      
+      // Prevent clicking the input from triggering parent item click handlers
+      input.addEventListener('click', (ev) => ev.stopPropagation());
+      
+      let isSaved = false;
+      const saveEdit = () => {
+        if (isSaved) return;
+        isSaved = true;
+        
+        const newName = input.value.trim();
+        if (newName === oldName || !newName) {
+          UI.renderPlayerList(game.players);
+          return;
+        }
+        
+        const res = game.updatePlayerName(playerId, newName);
+        if (!res.success) {
+          hapticFeedback('error');
+          UI.showToast(res.error, 'error');
+          UI.renderPlayerList(game.players);
+        }
+      };
+      
+      input.addEventListener('keypress', (ev) => {
+        if (ev.key === 'Enter') {
+          saveEdit();
+        }
+      });
+      
+      input.addEventListener('blur', () => {
+        saveEdit();
+      });
     }
   });
 
@@ -312,6 +361,11 @@ document.addEventListener('DOMContentLoaded', () => {
   game.on('playerRemoved', (player) => {
     UI.renderPlayerList(game.players);
     UI.showToast(`Đã xóa ${player.name}`);
+  });
+
+  game.on('playerUpdated', (player) => {
+    UI.renderPlayerList(game.players);
+    UI.showToast(`Đã sửa tên thành ${player.name}`, 'success');
   });
 
   game.on('gameStarted', (data) => {

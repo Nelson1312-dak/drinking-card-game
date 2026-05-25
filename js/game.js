@@ -120,6 +120,31 @@ class GameEngine {
     return true;
   }
 
+  updatePlayerName(playerId, newName) {
+    const trimmed = newName.trim();
+    if (!trimmed) {
+      return { success: false, error: 'Tên không được để trống!' };
+    }
+    if (trimmed.length > 15) {
+      return { success: false, error: 'Tên quá dài (tối đa 15 ký tự)!' };
+    }
+    
+    const duplicate = this.players.find(p => p.id !== playerId && p.name.toLowerCase() === trimmed.toLowerCase());
+    if (duplicate) {
+      return { success: false, error: 'Tên này đã có sẵn!' };
+    }
+
+    const player = this.players.find(p => p.id === playerId);
+    if (!player) {
+      return { success: false, error: 'Không tìm thấy người chơi!' };
+    }
+
+    player.name = trimmed;
+    player.initial = trimmed.charAt(0).toUpperCase();
+    this.emit('playerUpdated', player);
+    return { success: true, player };
+  }
+
   get playerCount() {
     return this.players.length;
   }

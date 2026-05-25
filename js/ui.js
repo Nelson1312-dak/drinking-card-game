@@ -117,8 +117,11 @@ const UI = {
         <div class="player-avatar" style="background-color: ${player.color}">
           ${player.initial}
         </div>
-        <span class="player-name-text">${player.name}</span>
-        <button class="btn-remove-player" data-id="${player.id}" aria-label="Xóa ${player.name}">✕</button>
+        <span class="player-name-text" data-id="${player.id}">${player.name}</span>
+        <div class="player-item-actions">
+          <button class="btn-edit-player" data-id="${player.id}" aria-label="Sửa ${player.name}">✏️</button>
+          <button class="btn-remove-player" data-id="${player.id}" aria-label="Xóa ${player.name}">✕</button>
+        </div>
       `;
       list.appendChild(item);
     });
