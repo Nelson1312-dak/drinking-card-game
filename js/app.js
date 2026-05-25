@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup screen state
   let selectedIntensity = 'mild';
+  let currentSetupMode = 'party';
 
   // Animal name pool for quick fill
   const ANIMAL_NAME_POOL = [
@@ -19,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     'Cáo Đỏ', 'Thỏ Nhỏ', 'Gấu Mập', 'Cá Vàng', 'Hổ Con',
     'Khỉ Ranh', 'Lợn Hồng', 'Vịt Con', 'Rùa Chậm', 'Ếch Xanh'
   ];
+
+  function syncQuickFillLabel(mode) {
+    const count = mode === 'duo' ? 2 : 5;
+    UI.elements.btnQuickFill.textContent = `🪄 Tạo nhanh ${count} người chơi`;
+  }
 
   // Common setup elements
   const modeTabBtns = document.querySelectorAll('.mode-tab-btn');
@@ -34,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hapticFeedback('light');
 
       // Start with a clean slate
+      currentSetupMode = mode;
       game.players = [];
       UI.elements.playerNameInput.value = '';
 
@@ -42,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game.players = [new Player('Cả Nhóm', 0)];
       } else {
         setupPlayerSection.style.display = 'block';
+        syncQuickFillLabel(mode);
       }
       UI.renderPlayerList(game.players);
 
@@ -81,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const mode = btn.dataset.mode;
       hapticFeedback('light');
 
+      currentSetupMode = mode;
       game.players = [];
       UI.elements.playerNameInput.value = '';
 
@@ -89,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game.players = [new Player('Cả Nhóm', 0)];
       } else {
         setupPlayerSection.style.display = 'block';
+        syncQuickFillLabel(mode);
         UI.elements.playerNameInput.focus();
       }
       UI.renderPlayerList(game.players);
@@ -100,13 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
     addPlayerFromInput();
   });
 
-  // Handle quick fill 5 random animal players
+  // Handle quick fill — count depends on current mode
   UI.elements.btnQuickFill.addEventListener('click', () => {
     hapticFeedback('success');
-    const picked = [...ANIMAL_NAME_POOL].sort(() => Math.random() - 0.5).slice(0, 5);
+    const count = currentSetupMode === 'duo' ? 2 : 5;
+    const picked = [...ANIMAL_NAME_POOL].sort(() => Math.random() - 0.5).slice(0, count);
     game.players = picked.map((name, i) => new Player(name, i));
     UI.renderPlayerList(game.players);
-    UI.showToast('Đã tạo 5 người chơi ngẫu nhiên! 🐾', 'success');
+    UI.showToast(`Đã tạo ${count} người chơi ngẫu nhiên! 🐾`, 'success');
   });
 
   // Handle adding player via Enter key in input
