@@ -285,19 +285,15 @@ body {
   justify-content: center !important;
 }
 
-.btn-neon-start {
-  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 4px 15px rgba(124, 58, 237, 0.4);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.splash-mode-featured {
+  border: 1.5px solid rgba(124, 58, 237, 0.75) !important;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.35), inset 0 0 12px rgba(124, 58, 237, 0.07) !important;
+  animation: pulse-featured-border 2.5s ease-in-out infinite;
 }
 
-.btn-neon-start:hover {
-  box-shadow: 0 0 30px rgba(124, 58, 237, 0.7), 0 6px 20px rgba(124, 58, 237, 0.5);
-  transform: translateY(-2px) !important;
-}
-
-.btn-neon-start:active {
-  transform: scale(0.96) translateY(0) !important;
+@keyframes pulse-featured-border {
+  0%, 100% { box-shadow: 0 0 10px rgba(124, 58, 237, 0.3), inset 0 0 8px rgba(124, 58, 237, 0.05); }
+  50%       { box-shadow: 0 0 22px rgba(124, 58, 237, 0.6), inset 0 0 14px rgba(124, 58, 237, 0.12); }
 }
 
 .splash-setup-btn {
@@ -372,6 +368,25 @@ body {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple element injected by JS */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(0);
+  animation: ripple-expand 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple-expand {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 .btn-large {

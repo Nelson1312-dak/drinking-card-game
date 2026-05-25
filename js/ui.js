@@ -68,6 +68,7 @@ const UI = {
     };
 
     this.createParticles();
+    this._initRipple();
   },
 
   // ======== Screen Navigation ========
@@ -418,6 +419,24 @@ const UI = {
     setTimeout(() => {
       this.elements.cardContainer.classList.remove('shake');
     }, 500);
+  },
+
+  // ======== Ripple Effect ========
+  _initRipple() {
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 2;
+        const ripple = document.createElement('span');
+        ripple.className = 'btn-ripple';
+        ripple.style.width  = size + 'px';
+        ripple.style.height = size + 'px';
+        ripple.style.left   = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top    = (e.clientY - rect.top  - size / 2) + 'px';
+        btn.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      });
+    });
   },
 
   // ======== Edit Name Popup ========
