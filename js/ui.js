@@ -23,6 +23,7 @@ const UI = {
       btnBackSplash: document.getElementById('btn-back-splash'),
       playerNameInput: document.getElementById('player-name-input'),
       btnAddPlayer: document.getElementById('btn-add-player'),
+      btnQuickFill: document.getElementById('btn-quick-fill'),
       playerList: document.getElementById('player-list'),
       playerCountBadge: document.getElementById('player-count'),
       btnPlay: document.getElementById('btn-play'),

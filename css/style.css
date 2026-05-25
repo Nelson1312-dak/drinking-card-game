@@ -452,6 +452,25 @@ body {
   border-radius: var(--radius);
 }
 
+.btn-quick-fill {
+  background: rgba(124, 58, 237, 0.05) !important;
+  border: 1px dashed rgba(124, 58, 237, 0.4) !important;
+  color: #c084fc !important;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: var(--radius);
+  margin-top: 4px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-quick-fill:hover {
+  background: rgba(124, 58, 237, 0.15) !important;
+  border-color: #a855f7 !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.25);
+}
+
 #player-name-input {
   flex: 1;
   background: rgba(255,255,255,0.05);

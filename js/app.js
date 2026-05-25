@@ -81,6 +81,22 @@ document.addEventListener('DOMContentLoaded', () => {
     addPlayerFromInput();
   });
 
+  // Handle quick fill 5 players
+  UI.elements.btnQuickFill.addEventListener('click', () => {
+    hapticFeedback('success');
+    game.resetGame();
+    game.players = [];
+    UI.renderPlayerList([]);
+    
+    game.addPlayer('Người 1');
+    game.addPlayer('Người 2');
+    game.addPlayer('Người 3');
+    game.addPlayer('Người 4');
+    game.addPlayer('Người 5');
+    
+    UI.showToast('Đã tạo nhanh 5 người chơi!', 'success');
+  });
+
   // Handle adding player via Enter key in input
   UI.elements.playerNameInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
