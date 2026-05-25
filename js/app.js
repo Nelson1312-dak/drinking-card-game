@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup screen state
   let selectedIntensity = 'mild';
 
+  // Initialize default players (Hội nhóm mode starts with 5 auto-generated players)
+  game.addPlayer('Người 1');
+  game.addPlayer('Người 2');
+  game.addPlayer('Người 3');
+  game.addPlayer('Người 4');
+  game.addPlayer('Người 5');
+
   // ==========================================
   // 1. EVENT BINDING: SPLASH SCREEN
   // ==========================================
@@ -56,8 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear input to allow focus later
         UI.elements.playerNameInput.value = '';
       } else {
-        // party (standard)
+        // party (standard: Hội nhóm)
         setupPlayerSection.style.display = 'block';
+        game.addPlayer('Người 1');
+        game.addPlayer('Người 2');
+        game.addPlayer('Người 3');
+        game.addPlayer('Người 4');
+        game.addPlayer('Người 5');
         UI.elements.playerNameInput.value = '';
         UI.elements.playerNameInput.focus();
       }
