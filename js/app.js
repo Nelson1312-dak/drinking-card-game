@@ -26,6 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     UI.elements.btnQuickFill.textContent = `🪄 Tạo nhanh ${count} người chơi`;
   }
 
+  const packSelector = document.querySelector('.pack-selector');
+
+  function showPackSelector() {
+    if (packSelector.classList.contains('pack-hidden')) {
+      packSelector.classList.remove('pack-hidden');
+      packSelector.classList.add('pack-visible');
+    }
+  }
+
+  function resetPackSelector() {
+    packSelector.classList.remove('pack-visible');
+    packSelector.classList.add('pack-hidden');
+  }
+
   // Common setup elements
   const modeTabBtns = document.querySelectorAll('.mode-tab-btn');
   const setupPlayerSection = document.getElementById('setup-player-section');
@@ -56,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Sync the mode tab inside the setup screen
       modeTabBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
 
+      resetPackSelector();
       UI.showScreen('screen-setup');
       if (mode !== 'solo') {
         UI.elements.playerNameInput.focus();
@@ -181,13 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === e.currentTarget) UI.hideEditPopup();
   });
 
-  // Handle intensity selection
+  // Handle intensity/vibe selection — reveals card type picker on first tap
   UI.elements.intensityBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       UI.elements.intensityBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedIntensity = btn.dataset.intensity;
       hapticFeedback('light');
+      showPackSelector();
     });
   });
 

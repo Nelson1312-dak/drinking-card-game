@@ -185,26 +185,27 @@ body {
 .splash-card-preview {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
   perspective: 1000px;
-  margin: 15px 0;
+  margin: 8px 0;
+  flex-shrink: 0;
 }
 
 .mini-card {
   position: absolute;
-  width: 110px;
-  height: 160px;
-  border-radius: 16px;
+  width: 88px;
+  height: 124px;
+  border-radius: 14px;
   border: 2px solid var(--glass-border-rich);
   background: rgba(22, 17, 39, 0.95);
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: var(--font-heading);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   color: #fff;
@@ -238,18 +239,18 @@ body {
 
 /* Keyframes for Floating Stack */
 @keyframes float-left {
-  0%, 100% { transform: rotate(-14deg) translateX(-70px) translateY(12px); }
-  50% { transform: rotate(-12deg) translateX(-70px) translateY(-2px); }
+  0%, 100% { transform: rotate(-14deg) translateX(-52px) translateY(8px); }
+  50% { transform: rotate(-12deg) translateX(-52px) translateY(-2px); }
 }
 
 @keyframes float-right {
-  0%, 100% { transform: rotate(14deg) translateX(70px) translateY(12px); }
-  50% { transform: rotate(12deg) translateX(70px) translateY(-2px); }
+  0%, 100% { transform: rotate(14deg) translateX(52px) translateY(8px); }
+  50% { transform: rotate(12deg) translateX(52px) translateY(-2px); }
 }
 
 @keyframes float-center {
-  0%, 100% { transform: translateY(-10px); }
-  50% { transform: translateY(-24px); }
+  0%, 100% { transform: translateY(-6px); }
+  50% { transform: translateY(-16px); }
 }
 
 .splash-action {
@@ -676,6 +677,14 @@ body {
   margin-bottom: 12px;
 }
 
+.pack-selector.pack-hidden {
+  display: none;
+}
+
+.pack-selector.pack-visible {
+  animation: slideUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
 .selector-title {
   font-size: 11px;
   text-transform: uppercase;
@@ -779,7 +788,15 @@ body {
 }
 
 #btn-play {
-  margin-bottom: 30px; /* Thêm khoảng trống ở chân màn hình để không bị cấn */
+  margin-bottom: 30px;
+}
+
+#btn-play:not(:disabled) {
+  background: linear-gradient(135deg, #a855f7 0%, #4f46e5 50%, #2563eb 100%);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.6), 0 0 50px rgba(79, 70, 229, 0.25), 0 4px 20px rgba(168, 85, 247, 0.4);
 }
 
 .setup-bottom-space {
