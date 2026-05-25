@@ -991,9 +991,52 @@ body {
 }
 
 .card-front .card-logo {
-  font-size: 64px;
-  margin-bottom: 12px;
+  font-size: 44px;
+  margin-bottom: 8px;
   animation: pulse-shimmer 2s infinite alternate;
+}
+
+.card-turn-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-turn-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.card-turn-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.15);
+}
+
+.card-turn-name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255,255,255,0.35);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-tap-hint {

@@ -153,11 +153,20 @@ const UI = {
     this.elements.currentAvatar.style.backgroundColor = player.color;
     this.elements.currentAvatar.textContent = player.initial;
     this.elements.currentPlayerName.textContent = player.name;
-    
+
     // Animate the player name change
     this.elements.currentPlayerName.classList.remove('animate-in');
     void this.elements.currentPlayerName.offsetWidth; // force reflow
     this.elements.currentPlayerName.classList.add('animate-in');
+
+    // Update card face turn info
+    const cardTurnAvatar = document.getElementById('card-turn-avatar');
+    const cardTurnName = document.getElementById('card-turn-name');
+    if (cardTurnAvatar) {
+      cardTurnAvatar.style.backgroundColor = player.color;
+      cardTurnAvatar.textContent = player.initial;
+    }
+    if (cardTurnName) cardTurnName.textContent = player.name;
   },
 
   updateCardsRemaining(count) {
