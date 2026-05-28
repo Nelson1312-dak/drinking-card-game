@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tử Vi Đẩu Số Chart Viewer</title>
+  <link rel="stylesheet" href="tuvi_viewer.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="btn-back">← Về Trang Chủ</a>
+    <h1>TỬ VI ĐẨU SỐ MÁY CHỦ</h1>
+    <p class="subtitle">Dựng lá số Tử Vi chuẩn Đông Phương học làm cổng đầu vào cho AI + RAG</p>
+  </header>
+
+  <!-- INPUT CONTROLS -->
+  <section class="input-section">
+    <form id="tuvi-form">
+      <div class="input-grid">
+        <div class="form-group">
+          <label for="name">Họ và Tên</label>
+          <input type="text" id="name" placeholder="Nguyễn Văn A" value="Đông Phương Mệnh" required>
+        </div>
+        <div class="form-group">
+          <label for="birth-date">Ngày sinh (Dương lịch)</label>
+          <input type="date" id="birth-date" value="1996-12-13" required>
+        </div>
+        <div class="form-group">
+          <label for="birth-hour">Giờ sinh (Giờ Dương)</label>
+          <select id="birth-hour" required>
+            <option value="0">23:00 - 00:59 (Giờ Tý)</option>
+            <option value="2">01:00 - 02:59 (Giờ Sửu)</option>
+            <option value="4">03:00 - 04:59 (Giờ Dần)</option>
+            <option value="6">05:00 - 06:59 (Giờ Mão)</option>
+            <option value="8">07:00 - 08:59 (Giờ Thìn)</option>
+            <option value="10">09:00 - 10:59 (Giờ Tỵ)</option>
+            <option value="12">11:00 - 12:59 (Giờ Ngọ)</option>
+            <option value="14">13:00 - 14:59 (Giờ Mùi)</option>
+            <option value="16">15:00 - 16:59 (Giờ Thân)</option>
+            <option value="18">17:00 - 18:59 (Giờ Dậu)</option>
+            <option value="20">19:00 - 20:59 (Giờ Tuất)</option>
+            <option value="22">21:00 - 22:59 (Giờ Hợi)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="gender">Giới tính</label>
+          <select id="gender" required>
+            <option value="1">Nam</option>
+            <option value="0">Nữ</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit">DỰNG LÁ SỐ TỬ VI</button>
+    </form>
+  </section>
+
+  <!-- 12 PALACES GRID INTERFACE -->
+  <main class="chart-container" id="chart-grid" style="display: none;">
+    <!-- Row 1 -->
+    <div class="palace-card" id="cung-Ty2" style="grid-area: 1 / 1;"></div>
+    <div class="palace-card" id="cung-Ngo" style="grid-area: 1 / 2;"></div>
+    <div class="palace-card" id="cung-Mui" style="grid-area: 1 / 3;"></div>
+    <div class="palace-card" id="cung-Than" style="grid-area: 1 / 4;"></div>
+
+    <!-- Row 2 -->
+    <div class="palace-card" id="cung-Thin" style="grid-area: 2 / 1;"></div>
+    
+    <!-- Central Information Panel -->
+    <div class="center-panel" id="cung-center">
+      <h2 id="disp-name">Họ và Tên</h2>
+      <div id="disp-class" class="highlight-badge">Dương Nam</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Dương Lịch</span>
+          <span class="value" id="disp-solar">13/12/1996</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Âm Lịch</span>
+          <span class="value" id="disp-lunar">04/11/Bính Tý</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Giờ Âm</span>
+          <span class="value" id="disp-lunar-hour">Giáp Tý</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Cục</span>
+          <span class="value cuc-badge" id="disp-cuc">Thổ Ngũ Cục</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="palace-card" id="cung-Dau" style="grid-area: 2 / 4;"></div>
+
+    <!-- Row 3 -->
+    <div class="palace-card" id="cung-Mao" style="grid-area: 3 / 1;"></div>
+    <div class="palace-card" id="cung-Tuat" style="grid-area: 3 / 4;"></div>
+
+    <!-- Row 4 -->
+    <div class="palace-card" id="cung-Dan" style="grid-area: 4 / 1;"></div>
+    <div class="palace-card" id="cung-Suu" style="grid-area: 4 / 2;"></div>
+    <div class="palace-card" id="cung-Ty" style="grid-area: 4 / 3;"></div>
+    <div class="palace-card" id="cung-Hoi" style="grid-area: 4 / 4;"></div>
+  </main>
+
+  <script type="module">
+    import { getTuViChart } from './tuvi.js';
+
+    const CUNG_KEYS = ["Ty", "Suu", "Dan", "Mao", "Thin", "Ty2", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
+    const CUNG_CHI_NAMES = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
+
+    const GOOD_STARS = ["Lộc Tồn", "Thiên Khôi", "Thiên Việt", "Tả Phù", "Hữu Bật", "Văn Xương", "Văn Khúc", "Hóa Lộc", "Hóa Quyền", "Hóa Khoa"];
+    const BAD_STARS = ["Kình Dương", "Đà La", "Thiên Khốc", "Thiên Hư", "Địa Không", "Địa Kiếp", "Hóa Kỵ"];
+
+    const form = document.getElementById('tuvi-form');
+    const grid = document.getElementById('chart-grid');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const dateVal = document.getElementById('birth-date').value; // yyyy-mm-dd
+      const hour = parseInt(document.getElementById('birth-hour').value);
+      const gender = parseInt(document.getElementById('gender').value);
+
+      if (!dateVal) return;
+
+      const [year, month, day] = dateVal.split('-').map(num => parseInt(num));
+
+      // Calculate chart
+      const chart = getTuViChart({
+        namSinh: year,
+        thangSinh: month,
+        ngaySinh: day,
+        gioSinh: hour,
+        gioiTinh: gender
+      });
+
+      // Update Center Info
+      document.getElementById('disp-name').textContent = name;
+      document.getElementById('disp-class').textContent = chart.thong_tin_goc.phan_loai;
+      document.getElementById('disp-solar').textContent = `${day}/${month}/${year}`;
+      document.getElementById('disp-lunar').textContent = `${chart.thong_tin_goc.am_lich.ngay} (${chart.thong_tin_goc.am_lich.thang}) năm ${chart.thong_tin_goc.am_lich.nam}`;
+      document.getElementById('disp-lunar-hour').textContent = chart.thong_tin_goc.am_lich.gio;
+      document.getElementById('disp-cuc').textContent = chart.thong_tin_goc.cuc;
+
+      // Update 12 Palaces
+      CUNG_KEYS.forEach((key, idx) => {
+        const palaceData = chart.la_so[key];
+        const card = document.getElementById(`cung-${key}`);
+        
+        // Split Phụ tinh into Cát (Good) and Hung (Bad)
+        const goodStars = palaceData.phu_tinh.filter(s => GOOD_STARS.includes(s));
+        const badStars = palaceData.phu_tinh.filter(s => BAD_STARS.includes(s));
+        const otherStars = palaceData.phu_tinh.filter(s => !GOOD_STARS.includes(s) && !BAD_STARS.includes(s));
+
+        // Generate interior HTML
+        card.innerHTML = `
+          <div class="palace-header">
+            <span class="palace-name">${palaceData.ten_cung}</span>
+            <span class="palace-branch">${CUNG_CHI_NAMES[idx]}</span>
+          </div>
+          <div class="stars-container">
+            <div class="chinh-tinh-list">
+              ${palaceData.chinh_tinh.map(s => `<span class="star-chinh-item">⭐ ${s}</span>`).join('')}
+            </div>
+            <div class="phu-tinh-grid">
+              <div class="phu-tinh-col">
+                ${goodStars.map(s => `<span class="star-good-item">${s}</span>`).join('')}
+              </div>
+              <div class="phu-tinh-col">
+                ${badStars.map(s => `<span class="star-bad-item">${s}</span>`).join('')}
+                ${otherStars.map(s => `<span class="star-neutral-item" style="color: var(--star-neutral); font-weight:600;">${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="palace-footer">
+            <span class="dai-han-val">Đ.Hạn: ${palaceData.dai_han}</span>
+            <span style="opacity: 0.5;">Cung ${idx + 1}</span>
+          </div>
+        `;
+      });
+
+      // Show grid
+      grid.style.display = 'grid';
+    });
+  </script>
+
+</body>
+</html>
