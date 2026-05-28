@@ -147,7 +147,7 @@ h1 {
 .chart-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, minmax(180px, auto));
+  grid-template-rows: repeat(4, minmax(130px, auto));
   gap: 10px;
   width: 100%;
   max-width: 1200px;
@@ -160,11 +160,11 @@ h1 {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-glass);
   border-radius: 12px;
-  padding: 12px;
+  padding: 6px 8px 4px;
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 180px;
+  min-height: 130px;
   transition: border-color 0.2s ease;
 }
 
@@ -178,19 +178,19 @@ h1 {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 6px;
-  margin-bottom: 8px;
+  padding-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .palace-name {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #fbbf24; /* Gold highlight for Palace function */
 }
 
 .palace-branch {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -201,38 +201,39 @@ h1 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .chinh-tinh-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-bottom: 8px;
+  gap: 2px;
+  margin-bottom: 4px;
 }
 
 .star-chinh-item {
   font-family: 'Outfit', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--star-chinh);
   text-shadow: 0 0 10px rgba(255, 69, 0, 0.25);
   display: flex;
   align-items: center;
   gap: 4px;
+  line-height: 1.3;
 }
 
 .phu-tinh-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  font-size: 0.75rem;
+  gap: 0 8px;
+  font-size: 0.7rem;
 }
 
 .phu-tinh-col {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .star-good-item {
@@ -250,11 +251,11 @@ h1 {
   display: flex;
   justify-content: space-between;
   margin-top: auto;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-muted);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 6px;
+  padding-top: 3px;
 }
 
 .dai-han-val {
@@ -675,7 +676,7 @@ h1 {
 .center-panel {
   position: relative;
   overflow: hidden;
-  padding: 16px !important;
+  padding: 8px 12px !important;
 }
 
 .drum-watermark {
@@ -683,8 +684,8 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  height: 90%;
+  width: 65%;
+  height: 65%;
   color: rgba(99, 102, 241, 0.06);
   pointer-events: none;
   z-index: 0;
@@ -692,12 +693,12 @@ h1 {
 
 .cp-side-decor {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
+  right: 6px;
+  bottom: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   opacity: 0.85;
   pointer-events: none;
   z-index: 1;
@@ -706,17 +707,17 @@ h1 {
 .cp-calligraphy {
   font-family: 'Outfit', serif;
   writing-mode: vertical-rl;
-  font-size: 1.1rem;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.12);
   text-transform: uppercase;
 }
 
 .cp-seal {
-  width: 44px;
-  height: 44px;
-  border: 2px solid #f43f5e;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid #f43f5e;
   padding: 2px;
   display: flex;
   align-items: center;
@@ -728,7 +729,7 @@ h1 {
 
 .cp-seal-inner {
   color: #f43f5e;
-  font-size: 8px;
+  font-size: 6px;
   font-weight: 900;
   line-height: 1.1;
   text-align: center;
@@ -747,7 +748,7 @@ h1 {
 }
 
 .cp-title-brand {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--text-muted);
@@ -756,21 +757,21 @@ h1 {
 
 .cp-main-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: 2px;
   color: #fff;
-  margin: 4px 0 8px;
+  margin: 2px 0 6px;
   border-top: 1px dashed rgba(255, 255, 255, 0.1);
   border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-  padding: 2px 20px;
+  padding: 1px 16px;
   width: auto;
 }
 
 .cp-info-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: left;
 }
 
@@ -783,13 +784,13 @@ h1 {
 }
 
 .cp-info-table td {
-  padding: 4px 2px;
+  padding: 2.5px 2px;
 }
 
 .cp-label {
   color: var(--text-muted);
   font-weight: 500;
-  width: 80px;
+  width: 72px;
   white-space: nowrap;
 }
 
@@ -824,21 +825,21 @@ h1 {
 .badge-menh {
   background: #f43f5e;
   color: #fff;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 3px;
+  padding: 1px 3px;
+  border-radius: 2px;
   letter-spacing: 0.5px;
 }
 
 .badge-than {
   background: #38bdf8;
   color: #06060c;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 3px;
-  margin-left: 3px;
+  padding: 1px 3px;
+  border-radius: 2px;
+  margin-left: 2px;
   letter-spacing: 0.5px;
   display: inline-block;
   vertical-align: middle;
@@ -846,7 +847,7 @@ h1 {
 
 /* Palace age style */
 .palace-age {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #a78bfa;
 }
@@ -856,19 +857,19 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 8px;
-  font-size: 0.75rem;
-  margin-top: 4px;
+  font-size: 0.7rem;
+  margin-top: 2px;
 }
 
 .phu-tinh-col {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1.5px;
 }
 
 .phu-tinh-col .star-item {
-  line-height: 1.4;
-  font-size: 0.72rem;
+  line-height: 1.3;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
