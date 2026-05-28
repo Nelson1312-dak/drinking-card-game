@@ -147,10 +147,10 @@ h1 {
 .chart-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, minmax(110px, auto));
+  grid-template-rows: repeat(4, minmax(150px, auto));
   gap: 10px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 640px;
   margin-bottom: 24px;
 }
 
@@ -164,7 +164,7 @@ h1 {
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 110px;
+  min-height: 150px;
   transition: border-color 0.2s ease;
 }
 
@@ -359,7 +359,7 @@ h1 {
 }
 
 .chart-outer {
-  min-width: 850px;
+  min-width: 600px;
   background: #06060c;
   padding: 16px;
   border-radius: 16px;
