@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tử Vi Đẩu Số Chart Viewer</title>
-  <link rel="stylesheet" href="tuvi_viewer.css">
+  <title>Lá Số Tử Vi AI — Lật Bài</title>
+  <link rel="stylesheet" href="./tuvi_viewer.css">
 </head>
 <body>
 
   <header>
-    <a href="index.html" class="btn-back">← Về Trang Chủ</a>
-    <h1>TỬ VI ĐẨU SỐ MÁY CHỦ</h1>
-    <p class="subtitle">Dựng lá số Tử Vi chuẩn Đông Phương học làm cổng đầu vào cho AI + RAG</p>
+    <a href="./index.html" class="btn-back">← Về Trang Chủ</a>
+    <h1>TỬ VI ĐẨU SỐ AI</h1>
+    <p class="subtitle">Dựng lá số Tử Vi chuẩn Đông Phương & Tham vấn chi tiết cùng chuyên gia AI</p>
   </header>
 
   <!-- INPUT CONTROLS -->
@@ -103,6 +103,37 @@
     <div class="palace-card" id="cung-Hoi" style="grid-area: 4 / 4;"></div>
   </main>
 
+  <!-- AI CONSULTATION PANEL -->
+  <section class="ai-section" id="ai-panel" style="display: none;">
+    <div class="ai-container">
+      <div class="ai-header">
+        <span class="ai-icon">🔮</span>
+        <h3>BẢN TỰ VẤN LÁ SỐ CÙNG BẬC THẦY AI</h3>
+      </div>
+      
+      <!-- Chat history area -->
+      <div class="ai-chat-log" id="ai-chat-log">
+        <div class="ai-message assistant">
+          <p>Lá số Tử Vi Đẩu Số của bạn đã được lập thành công trên bàn số. Hãy chọn một chủ đề bên dưới hoặc nhập câu hỏi chi tiết của riêng bạn để bắt đầu luận giải cùng tôi.</p>
+        </div>
+      </div>
+      
+      <!-- Query controls -->
+      <div class="ai-input-area">
+        <div class="ai-prompts">
+          <button type="button" class="prompt-chip" data-question="Hãy luận giải chi tiết tổng quan lá số Tử Vi này của tôi về điểm mạnh, điểm yếu và cách cục lớn?">Tổng quan lá số 🌐</button>
+          <button type="button" class="prompt-chip" data-question="Vận trình công danh, sự nghiệp, tiền tài và cơ hội thăng tiến của tôi trong tương lai thế nào?">Công danh & Tài lộc 💼</button>
+          <button type="button" class="prompt-chip" data-question="Đường tình duyên, hôn nhân và các mối quan hệ gia đạo của tôi có thuận lợi tốt đẹp không?">Tình duyên & Hôn nhân ❤️</button>
+          <button type="button" class="prompt-chip" data-question="Có những vận hạn xấu, tai ương hay vấn đề sức khỏe nào tôi cần đặc biệt lưu ý và hóa giải không?">Hạn xấu & Sức khỏe ⚠️</button>
+        </div>
+        <div class="ai-input-row">
+          <input type="text" id="ai-question" placeholder="Nhập câu hỏi của bạn (ví dụ: cung Mệnh của tôi có tốt không?)..." autocomplete="off">
+          <button type="button" id="btn-ask-ai" class="btn-ask">THAM VẤN AI</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script type="module">
     import { getTuViChart } from './tuvi.js';
 
@@ -114,8 +145,17 @@
 
     const form = document.getElementById('tuvi-form');
     const grid = document.getElementById('chart-grid');
+    const aiPanel = document.getElementById('ai-panel');
+    const chatLog = document.getElementById('ai-chat-log');
+    const askBtn = document.getElementById('btn-ask-ai');
+    const questionInput = document.getElementById('ai-question');
 
-    form.addEventListener('submit', (e) => {
+    let currentChart = null;
+    let chatHistory = [];
+    let isSavingProfile = false;
+    let savedProfileId = null;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const name = document.getElementById('name').value;
@@ -127,7 +167,7 @@
 
       const [year, month, day] = dateVal.split('-').map(num => parseInt(num));
 
-      // Calculate chart
+      // 1. Calculate chart
       const chart = getTuViChart({
         namSinh: year,
         thangSinh: month,
@@ -135,8 +175,17 @@
         gioSinh: hour,
         gioiTinh: gender
       });
+      currentChart = chart;
 
-      // Update Center Info
+      // Reset chat history
+      chatHistory = [];
+      chatLog.innerHTML = `
+        <div class="ai-message assistant">
+          <p>Lá số Tử Vi Đẩu Số của bạn đã được lập thành công trên bàn số. Hãy chọn một chủ đề bên dưới hoặc nhập câu hỏi chi tiết của riêng bạn để bắt đầu luận giải cùng tôi.</p>
+        </div>
+      `;
+
+      // 2. Update Center Info
       document.getElementById('disp-name').textContent = name;
       document.getElementById('disp-class').textContent = chart.thong_tin_goc.phan_loai;
       document.getElementById('disp-solar').textContent = `${day}/${month}/${year}`;
@@ -144,17 +193,15 @@
       document.getElementById('disp-lunar-hour').textContent = chart.thong_tin_goc.am_lich.gio;
       document.getElementById('disp-cuc').textContent = chart.thong_tin_goc.cuc;
 
-      // Update 12 Palaces
+      // 3. Update 12 Palaces
       CUNG_KEYS.forEach((key, idx) => {
         const palaceData = chart.la_so[key];
         const card = document.getElementById(`cung-${key}`);
         
-        // Split Phụ tinh into Cát (Good) and Hung (Bad)
         const goodStars = palaceData.phu_tinh.filter(s => GOOD_STARS.includes(s));
         const badStars = palaceData.phu_tinh.filter(s => BAD_STARS.includes(s));
         const otherStars = palaceData.phu_tinh.filter(s => !GOOD_STARS.includes(s) && !BAD_STARS.includes(s));
 
-        // Generate interior HTML
         card.innerHTML = `
           <div class="palace-header">
             <span class="palace-name">${palaceData.ten_cung}</span>
@@ -181,10 +228,227 @@
         `;
       });
 
-      // Show grid
+      // Show grid and AI panel
       grid.style.display = 'grid';
+      aiPanel.style.display = 'block';
+      
+      // Auto-scroll to grid
+      grid.scrollIntoView({ behavior: 'smooth' });
+
+      // 4. Save profile asynchronously to database
+      saveProfileToDB(name, dateVal, hour, gender, chart);
     });
+
+    // Save profile to database helper
+    async function saveProfileToDB(name, dateVal, hour, gender, chart) {
+      if (isSavingProfile) return;
+      isSavingProfile = true;
+      savedProfileId = null;
+
+      try {
+        const payload = {
+          name,
+          birth_date: dateVal,
+          birth_hour: hour,
+          gender,
+          lunar_date: `${chart.thong_tin_goc.am_lich.ngay} (${chart.thong_tin_goc.am_lich.thang}) năm ${chart.thong_tin_goc.am_lich.nam}`,
+          lunar_hour: chart.thong_tin_goc.am_lich.gio,
+          chart_json: chart
+        };
+
+        const response = await fetch('/api/save-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          const resData = await response.json();
+          savedProfileId = resData.id;
+          console.log("[DB] Profile saved successfully with ID:", savedProfileId);
+        } else {
+          console.warn("[DB] Failed to save profile:", await response.text());
+        }
+      } catch (err) {
+        console.error("[DB] Error saving profile:", err);
+      } finally {
+        isSavingProfile = false;
+      }
+    }
+
+    // AI Consultation event handlers
+    askBtn.addEventListener('click', () => {
+      const q = questionInput.value.trim();
+      if (q) handleAskAI(q);
+    });
+
+    questionInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const q = questionInput.value.trim();
+        if (q) handleAskAI(q);
+      }
+    });
+
+    // Quick prompt chip click listener
+    document.querySelectorAll('.prompt-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const q = chip.getAttribute('data-question');
+        handleAskAI(q);
+      });
+    });
+
+    async function handleAskAI(questionText) {
+      if (!currentChart) return;
+      
+      // Clear input
+      questionInput.value = '';
+
+      // Append user message to log
+      appendMessage('user', questionText);
+
+      // Disable inputs while loading
+      setLoading(true);
+
+      // Append temporary typing indicator
+      const loaderId = appendTypingIndicator();
+
+      try {
+        // Construct summary context
+        const contextStr = buildChartSummary(currentChart);
+
+        const payload = {
+          question: questionText,
+          context: contextStr,
+          type: 'tuvi',
+          history: chatHistory
+        };
+
+        const response = await fetch('/api/interpret', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // Remove typing indicator
+        removeTypingIndicator(loaderId);
+
+        if (!response.ok) {
+          const errText = await response.text();
+          appendMessage('assistant', `⚠️ Lỗi từ hệ thống AI: ${errText || 'Không phản hồi'}`);
+        } else {
+          const data = await response.json();
+          const answer = data.answer || '';
+          
+          // Append assistant message
+          appendMessage('assistant', answer);
+
+          // Update memory chat history
+          chatHistory.push({ role: 'user', content: questionText });
+          chatHistory.push({ role: 'assistant', content: answer });
+          
+          // Limit memory length to keep Qwen within bounds
+          if (chatHistory.length > 8) {
+            chatHistory = chatHistory.slice(-8);
+          }
+        }
+      } catch (err) {
+        removeTypingIndicator(loaderId);
+        appendMessage('assistant', `⚠️ Không thể kết nối với máy chủ AI: ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Markdown simple regex parser
+    function parseMarkdown(md) {
+      if (!md) return "";
+      let html = md;
+      html = html.replace(/^### (.*$)/gim, '<h4>$1</h4>');
+      html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+      html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
+      html = html.replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>');
+      html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+      
+      const lines = html.split('\n');
+      let inList = false;
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trim().startsWith('<li>')) {
+          if (!inList) {
+            lines[i] = '<ul>' + lines[i];
+            inList = true;
+          }
+        } else {
+          if (inList) {
+            lines[i - 1] = lines[i - 1] + '</ul>';
+            inList = false;
+          }
+        }
+      }
+      if (inList) {
+        lines[lines.length - 1] = lines[lines.length - 1] + '</ul>';
+      }
+      html = lines.join('\n');
+      html = html.replace(/^\-\-\-$/gim, '<hr>');
+      html = html.replace(/\n/g, '<br>');
+      return html;
+    }
+
+    function appendMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `ai-message ${sender}`;
+      
+      if (sender === 'user') {
+        msgDiv.innerHTML = `<p>${text}</p>`;
+      } else {
+        msgDiv.innerHTML = `<div class="md-content">${parseMarkdown(text)}</div>`;
+      }
+      
+      chatLog.appendChild(msgDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function appendTypingIndicator() {
+      const id = 'loader-' + Date.now();
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'ai-message assistant typing-indicator-msg';
+      msgDiv.id = id;
+      msgDiv.innerHTML = `
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      `;
+      chatLog.appendChild(msgDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+      return id;
+    }
+
+    function removeTypingIndicator(id) {
+      const loader = document.getElementById(id);
+      if (loader) loader.remove();
+    }
+
+    function setLoading(loading) {
+      askBtn.disabled = loading;
+      questionInput.disabled = loading;
+      document.querySelectorAll('.prompt-chip').forEach(b => b.disabled = loading);
+      if (loading) {
+        askBtn.textContent = 'ĐANG LUẬN...';
+      } else {
+        askBtn.textContent = 'THAM VẤN AI';
+      }
+    }
+
+    function buildChartSummary(chart) {
+      let summary = `Họ tên: ${document.getElementById('name').value}, Giới tính: ${chart.thong_tin_goc.phan_loai}, Cục: ${chart.thong_tin_goc.cuc}\n`;
+      summary += `Lịch âm: ${chart.thong_tin_goc.am_lich.ngay} (${chart.thong_tin_goc.am_lich.thang}) năm ${chart.thong_tin_goc.am_lich.nam}, Giờ: ${chart.thong_tin_goc.am_lich.gio}\n`;
+      summary += `Cung vị:\n`;
+      Object.entries(chart.la_so).forEach(([key, palace]) => {
+        summary += `- Cung ${palace.ten_cung} (tại ${key}): Chính tinh [${palace.chinh_tinh.join(', ') || 'Vô chính diệu'}], Phụ tinh [${palace.phu_tinh.join(', ') || 'Không có'}], Đại hạn [${palace.dai_han}]\n`;
+      });
+      return summary;
+    }
   </script>
 
 </body>
 </html>
+
