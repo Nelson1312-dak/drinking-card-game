@@ -333,19 +333,93 @@ h1 {
   color: #fbbf24;
 }
 
-/* RESPONSIVE TUNING */
-@media (max-width: 900px) {
-  .chart-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .center-panel {
-    order: -1;
-    width: 100%;
-    margin-bottom: 12px;
-  }
+/* RESPONSIVE TUNING & HORIZONTAL SCROLL FOR HOROSCOPE */
+.chart-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24px;
+}
+
+/* Custom scrollbar for chart scroll */
+.chart-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.chart-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+.chart-scroll::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+}
+.chart-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+.chart-outer {
+  min-width: 850px;
+  background: #06060c;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border-glass);
+}
+
+/* Palace Header Badge styling for Tuần/Triệt */
+.pc-tt-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 4px;
+  margin-left: 4px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.pc-tt-badge.blue {
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.1);
+}
+.pc-tt-badge.red {
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  background: rgba(244, 63, 94, 0.1);
+}
+.pc-tt-badge.black {
+  color: #e2e8f0;
+  border: 1px solid rgba(226, 232, 240, 0.4);
+  background: rgba(226, 232, 240, 0.1);
+}
+
+/* Export Image Button */
+.btn-export {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+}
+
+.btn-export:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-export:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* AI CONSULTATION PANEL STYLES */

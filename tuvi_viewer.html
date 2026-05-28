@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lá Số Tử Vi AI — Lật Bài</title>
   <link rel="stylesheet" href="./tuvi_viewer.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -12,6 +13,7 @@
     <a href="./index.html" class="btn-back">← Về Trang Chủ</a>
     <h1>TỬ VI ĐẨU SỐ AI</h1>
     <p class="subtitle">Dựng lá số Tử Vi chuẩn Đông Phương & Tham vấn chi tiết cùng chuyên gia AI</p>
+    <button type="button" id="btn-export-img" class="btn-export" style="margin-top: 12px; display: none;">Xuất ảnh lá số 📸</button>
   </header>
 
   <!-- INPUT CONTROLS -->
@@ -56,52 +58,56 @@
   </section>
 
   <!-- 12 PALACES GRID INTERFACE -->
-  <main class="chart-container" id="chart-grid" style="display: none;">
-    <!-- Row 1 -->
-    <div class="palace-card" id="cung-Ty2" style="grid-area: 1 / 1;"></div>
-    <div class="palace-card" id="cung-Ngo" style="grid-area: 1 / 2;"></div>
-    <div class="palace-card" id="cung-Mui" style="grid-area: 1 / 3;"></div>
-    <div class="palace-card" id="cung-Than" style="grid-area: 1 / 4;"></div>
+  <div class="chart-scroll" id="chart-scroll-wrapper" style="display: none;">
+    <div class="chart-outer">
+      <main class="chart-container" id="chart-grid">
+        <!-- Row 1 -->
+        <div class="palace-card" id="cung-Ty2" style="grid-area: 1 / 1;"></div>
+        <div class="palace-card" id="cung-Ngo" style="grid-area: 1 / 2;"></div>
+        <div class="palace-card" id="cung-Mui" style="grid-area: 1 / 3;"></div>
+        <div class="palace-card" id="cung-Than" style="grid-area: 1 / 4;"></div>
 
-    <!-- Row 2 -->
-    <div class="palace-card" id="cung-Thin" style="grid-area: 2 / 1;"></div>
-    
-    <!-- Central Information Panel -->
-    <div class="center-panel" id="cung-center">
-      <h2 id="disp-name">Họ và Tên</h2>
-      <div id="disp-class" class="highlight-badge">Dương Nam</div>
-      <div class="info-grid">
-        <div class="info-item">
-          <span class="label">Dương Lịch</span>
-          <span class="value" id="disp-solar">13/12/1996</span>
+        <!-- Row 2 -->
+        <div class="palace-card" id="cung-Thin" style="grid-area: 2 / 1;"></div>
+        
+        <!-- Central Information Panel -->
+        <div class="center-panel" id="cung-center">
+          <h2 id="disp-name">Họ và Tên</h2>
+          <div id="disp-class" class="highlight-badge">Dương Nam</div>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Dương Lịch</span>
+              <span class="value" id="disp-solar">13/12/1996</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Âm Lịch</span>
+              <span class="value" id="disp-lunar">04/11/Bính Tý</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Giờ Âm</span>
+              <span class="value" id="disp-lunar-hour">Giáp Tý</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Cục</span>
+              <span class="value cuc-badge" id="disp-cuc">Thổ Ngũ Cục</span>
+            </div>
+          </div>
         </div>
-        <div class="info-item">
-          <span class="label">Âm Lịch</span>
-          <span class="value" id="disp-lunar">04/11/Bính Tý</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Giờ Âm</span>
-          <span class="value" id="disp-lunar-hour">Giáp Tý</span>
-        </div>
-        <div class="info-item">
-          <span class="label">Cục</span>
-          <span class="value cuc-badge" id="disp-cuc">Thổ Ngũ Cục</span>
-        </div>
-      </div>
+        
+        <div class="palace-card" id="cung-Dau" style="grid-area: 2 / 4;"></div>
+
+        <!-- Row 3 -->
+        <div class="palace-card" id="cung-Mao" style="grid-area: 3 / 1;"></div>
+        <div class="palace-card" id="cung-Tuat" style="grid-area: 3 / 4;"></div>
+
+        <!-- Row 4 -->
+        <div class="palace-card" id="cung-Dan" style="grid-area: 4 / 1;"></div>
+        <div class="palace-card" id="cung-Suu" style="grid-area: 4 / 2;"></div>
+        <div class="palace-card" id="cung-Ty" style="grid-area: 4 / 3;"></div>
+        <div class="palace-card" id="cung-Hoi" style="grid-area: 4 / 4;"></div>
+      </main>
     </div>
-    
-    <div class="palace-card" id="cung-Dau" style="grid-area: 2 / 4;"></div>
-
-    <!-- Row 3 -->
-    <div class="palace-card" id="cung-Mao" style="grid-area: 3 / 1;"></div>
-    <div class="palace-card" id="cung-Tuat" style="grid-area: 3 / 4;"></div>
-
-    <!-- Row 4 -->
-    <div class="palace-card" id="cung-Dan" style="grid-area: 4 / 1;"></div>
-    <div class="palace-card" id="cung-Suu" style="grid-area: 4 / 2;"></div>
-    <div class="palace-card" id="cung-Ty" style="grid-area: 4 / 3;"></div>
-    <div class="palace-card" id="cung-Hoi" style="grid-area: 4 / 4;"></div>
-  </main>
+  </div>
 
   <!-- AI CONSULTATION PANEL -->
   <section class="ai-section" id="ai-panel" style="display: none;">
@@ -140,8 +146,8 @@
     const CUNG_KEYS = ["Ty", "Suu", "Dan", "Mao", "Thin", "Ty2", "Ngo", "Mui", "Than", "Dau", "Tuat", "Hoi"];
     const CUNG_CHI_NAMES = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
 
-    const GOOD_STARS = ["Lộc Tồn", "Thiên Khôi", "Thiên Việt", "Tả Phù", "Hữu Bật", "Văn Xương", "Văn Khúc", "Hóa Lộc", "Hóa Quyền", "Hóa Khoa"];
-    const BAD_STARS = ["Kình Dương", "Đà La", "Thiên Khốc", "Thiên Hư", "Địa Không", "Địa Kiếp", "Hóa Kỵ"];
+    const GOOD_STARS = ["Lộc Tồn", "Thiên Khôi", "Thiên Việt", "Tả Phù", "Hữu Bật", "Văn Xương", "Văn Khúc", "Hóa Lộc", "Hóa Quyền", "Hóa Khoa", "Thiên Mã", "Đào Hoa", "Hồng Loan", "Thiên Hỷ"];
+    const BAD_STARS = ["Kình Dương", "Đà La", "Thiên Khốc", "Thiên Hư", "Địa Không", "Địa Kiếp", "Hóa Kỵ", "Cô Thần", "Quả Tú", "Đại Hao", "Tiểu Hao"];
 
     const form = document.getElementById('tuvi-form');
     const grid = document.getElementById('chart-grid');
@@ -208,10 +214,15 @@
         const badStars = palaceData.phu_tinh.filter(s => BAD_STARS.includes(s));
         const otherStars = palaceData.phu_tinh.filter(s => !GOOD_STARS.includes(s) && !BAD_STARS.includes(s));
 
+        let ttLabel = '';
+        if (palaceData.tuan && palaceData.triet) ttLabel = `<span class="pc-tt-badge black">T.Triệt</span>`;
+        else if (palaceData.tuan)        ttLabel = `<span class="pc-tt-badge blue">Tuần</span>`;
+        else if (palaceData.triet)       ttLabel = `<span class="pc-tt-badge red">Triệt</span>`;
+
         card.innerHTML = `
           <div class="palace-header">
             <span class="palace-name">${palaceData.ten_cung}</span>
-            <span class="palace-branch">${CUNG_CHI_NAMES[idx]}</span>
+            <span class="palace-branch">${CUNG_CHI_NAMES[idx]} ${ttLabel}</span>
           </div>
           <div class="stars-container">
             <div class="chinh-tinh-list">
@@ -234,12 +245,14 @@
         `;
       });
 
-      // Show grid and AI panel
+      // Show grid and AI panel, and export button
+      document.getElementById('chart-scroll-wrapper').style.display = 'block';
       grid.style.display = 'grid';
       aiPanel.style.display = 'block';
+      document.getElementById('btn-export-img').style.display = 'inline-block';
       
       // Auto-scroll to grid
-      grid.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('chart-scroll-wrapper').scrollIntoView({ behavior: 'smooth' });
 
       // 4. Save profile asynchronously to database
       saveProfileToDB(name, dateVal, hour, gender, chart);
@@ -480,6 +493,37 @@
       });
       return summary;
     }
+
+    // Image Export event handler
+    document.getElementById('btn-export-img').addEventListener('click', () => {
+      const target = document.querySelector('.chart-outer');
+      const nameVal = document.getElementById('name').value.trim() || 'vo-danh';
+      const exportBtn = document.getElementById('btn-export-img');
+      
+      exportBtn.disabled = true;
+      exportBtn.textContent = 'Đang xuất... ⏳';
+      
+      setTimeout(() => {
+        html2canvas(target, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#06060c'
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = `la-so-tu-vi-${nameVal.replace(/\s+/g, '-')}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          
+          exportBtn.disabled = false;
+          exportBtn.textContent = 'Xuất ảnh lá số 📸';
+        }).catch(err => {
+          console.error('Export error:', err);
+          alert('Có lỗi xảy ra khi xuất ảnh lá số.');
+          exportBtn.disabled = false;
+          exportBtn.textContent = 'Xuất ảnh lá số 📸';
+        });
+      }, 100);
+    });
   </script>
 
 </body>
